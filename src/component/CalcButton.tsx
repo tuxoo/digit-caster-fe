@@ -2,13 +2,15 @@ import React from "react";
 import {Box} from "@chakra-ui/react";
 
 interface CalcButtonProps {
-    name: string
+    name: string,
+    handle: (e: any) => void
 }
 
-const CalcButton = ({name}: CalcButtonProps) => {
+const CalcButton = ({name, handle}: CalcButtonProps) => {
     return (
         <Box
             as='button'
+            onClick={handle}
             h='full'
             width='full'
             bg='purple.200'
