@@ -13,8 +13,8 @@ const calcSlice = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<string>) {
-            const newNum = state.currentNum.concat(action.payload).match(/^[0-9,]*[.]{0,1}[0-9,]*$/)
-            if(newNum !== null) {
+            const isAllow = state.currentNum.concat(action.payload).match(/^[0-9,]*[.]{0,1}[0-9,]*$/)
+            if(isAllow !== null) {
                 state.currentNum = state.currentNum.concat(action.payload)
             }
         },
