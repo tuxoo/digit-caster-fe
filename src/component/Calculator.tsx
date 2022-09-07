@@ -17,18 +17,35 @@ const Calculator = () => {
             <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
                 <Flex direction='column' bgColor='white' boxShadow='xl' p={4} rounded={10}>
                     <Grid
-                        h='400px'
-                        w='360px'
+                        h='480px'
+                        w='300px'
                         templateRows='repeat(4, 2fr)'
-                        templateColumns='repeat(5, 2fr)'
+                        templateColumns='repeat(4, 2fr)'
                         gap={2}
                     >
-                        <GridItem colSpan={4} h='16'>
+
+                        <GridItem colSpan={3} h='16'>
                             <CalcPanel/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16' bg='transparent'>
                             <CalcProgress/>
+                        </GridItem>
+
+                        <GridItem colSpan={1} h='16'>
+                            <CalcButton name={'-'}/>
+                        </GridItem>
+
+                        <GridItem colSpan={1} h='16'>
+                            <CalcButton name={'+'}/>
+                        </GridItem>
+
+                        <GridItem colSpan={1} h='16'>
+                            <CalcButton name={'/'}/>
+                        </GridItem>
+
+                        <GridItem colSpan={1} h='16'>
+                            <CalcButton name={'*'}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
@@ -41,10 +58,6 @@ const Calculator = () => {
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'9'}/>
-                        </GridItem>
-
-                        <GridItem colSpan={1} h='16'>
-                            <CalcButton name={'/'}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
@@ -64,10 +77,6 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
-                            <CalcButton name={'*'}/>
-                        </GridItem>
-
-                        <GridItem colSpan={1} h='16'>
                             <CalcButton name={'%'}/>
                         </GridItem>
 
@@ -83,10 +92,6 @@ const Calculator = () => {
                             <CalcButton name={'3'}/>
                         </GridItem>
 
-                        <GridItem colSpan={1} h='16'>
-                            <CalcButton name={'-'}/>
-                        </GridItem>
-
                         <GridItem rowSpan={2} colSpan={1}>
                             <CalcButton name={'='}/>
                         </GridItem>
@@ -99,11 +104,7 @@ const Calculator = () => {
                             <CalcButton name={'.'}/>
                         </GridItem>
 
-                        <GridItem colSpan={1} h='16'>
-                            <CalcButton name={'+'}/>
-                        </GridItem>
-
-                        <GridItem colSpan={5} h='10'>
+                        <GridItem colSpan={4} h='10'>
                             <Label text={'© 2022 DigitCaster.com'}/>
                         </GridItem>
                     </Grid>
