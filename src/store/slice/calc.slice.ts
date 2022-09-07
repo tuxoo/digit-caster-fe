@@ -20,7 +20,6 @@ const calcSlice = createSlice({
         },
         type(state, action: PayloadAction<string>) {
             const isAllow = action.payload.match(/^[0-9,]*[.]{0,1}[0-9,]*$/)
-            console.log(action.payload)
             if(isAllow !== null) {
                 state.currentNum = action.payload
             }
