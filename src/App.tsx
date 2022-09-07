@@ -1,10 +1,18 @@
 import React from 'react';
+import {ChakraProvider, extendTheme} from '@chakra-ui/react'
+import Calculator from "./component/Calculator";
+
+const theme = extendTheme({
+    fonts: {
+        body: `'Raleway', sans-serif,`
+    },
+})
 
 function App() {
     return (
-        <div className="App">
-            Calculation
-        </div>
+        <ChakraProvider theme={theme}>
+            <Calculator/>
+        </ChakraProvider>
     );
 }
 
