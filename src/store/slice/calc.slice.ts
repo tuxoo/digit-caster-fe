@@ -1,5 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
+const doubleRegex = /^[0-9,]*[.]{0,1}[0-9,]*$/
+
 interface CalcState {
     currentNum: string
 }
@@ -13,13 +15,13 @@ const calcSlice = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<string>) {
-            const isAllow = state.currentNum.concat(action.payload).match(/^[0-9,]*[.]{0,1}[0-9,]*$/)
+            const isAllow = state.currentNum.concat(action.payload).match(doubleRegex)
             if(isAllow !== null) {
                 state.currentNum = state.currentNum.concat(action.payload)
             }
         },
         type(state, action: PayloadAction<string>) {
-            const isAllow = action.payload.match(/^[0-9,]*[.]{0,1}[0-9,]*$/)
+            const isAllow = action.payload.match(doubleRegex)
             if(isAllow !== null) {
                 state.currentNum = action.payload
             }
