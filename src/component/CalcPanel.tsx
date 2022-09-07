@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Input} from "@chakra-ui/react";
+import {Flex, Input} from "@chakra-ui/react";
 
 interface CalcPanelProps {
     val: string,
@@ -8,21 +8,16 @@ interface CalcPanelProps {
 
 const CalcPanel = ({val, handle}: CalcPanelProps) => {
     return (
-        <Box
-            as='button' h='16'
-            width='full'
-            justifyContent='center'
-            rounded='6'
-        >
+        <Flex h='full' width='full' justifyContent='center' alignItems='center'>
             <Input
-                // isReadOnly={true}
                 onChange={handle}
                 placeholder='0'
+                fontSize='lg'
                 focusBorderColor='purple.300'
                 size='lg'
                 value={val}
             />
-        </Box>
+        </Flex>
     )
 }
 
