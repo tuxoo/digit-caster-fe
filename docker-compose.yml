@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   digit-caster-fe:
-    container_name:   digit-caster-fe
-    build: .
+    container_name: digit-caster-fe
+    image: digit-caster-fe:1.0
+    build: ./
     restart: on-failure
     ports:
       - 80:80
@@ -12,7 +13,7 @@ services:
 
   digit-caster-be:
     container_name: digit-caster-be
-    image: digit-caster_app-digit-caster:latest
+    image: digit-caster-be:1.0
     restart: on-failure
     ports:
       - 9000:9000
