@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ApiError} from "../../model/error.model";
 import {CalcRequest, calculationService} from "../../service/calculation.service";
+import {toast} from "react-toastify";
 
 const doubleRegex = /^[0-9,]*[.]{0,1}[0-9,]*$/
 
@@ -68,6 +69,7 @@ const calcSlice = createSlice({
         builder.addCase(calcResult.rejected, (state, {payload}) => {
             state.isLoading = false;
             state.error = payload
+            toast.error("Something went wrong")
         })
     }
 })

@@ -4,13 +4,22 @@ import './index.css';
 import App from './App';
 import {Provider} from "react-redux";
 import {store} from "./store/store";
+import {ChakraProvider, extendTheme} from "@chakra-ui/react";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
+const theme = extendTheme({
+    fonts: {
+        body: `'Raleway', sans-serif,`
+    },
+})
+
 root.render(
     <Provider store={store}>
-        <App/>
+        <ChakraProvider theme={theme}>
+            <App/>
+        </ChakraProvider>
     </Provider>
 );

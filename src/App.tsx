@@ -1,18 +1,18 @@
 import React from 'react';
-import {ChakraProvider, extendTheme} from '@chakra-ui/react'
 import Calculator from "./component/Calculator";
-
-const theme = extendTheme({
-    fonts: {
-        body: `'Raleway', sans-serif,`
-    },
-})
+import {Slide, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css"
 
 function App() {
     return (
-        <ChakraProvider theme={theme}>
+        <>
+            <ToastContainer
+                draggable={false}
+                transition={Slide}
+                autoClose={1000}
+            />
             <Calculator/>
-        </ChakraProvider>
+        </>
     );
 }
 
