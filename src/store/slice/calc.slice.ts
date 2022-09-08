@@ -22,19 +22,6 @@ const initialState: CalcState = {
 
 export const CALCULATION_ACTION = 'calculation/result'
 
-const calcResult = createAsyncThunk<String, CalcRequest, { rejectValue: ApiError }>(
-    CALCULATION_ACTION,
-    async (request: CalcRequest, thunkApi) => {
-        try {
-            const response = await calculationService.calculation(request)
-            return response.data
-        } catch (error: any) {
-            const err: ApiError = {message: error.response.data}
-            return thunkApi.rejectWithValue(err)
-        }
-    }
-)
-
 const calcSlice = createSlice({
     name: 'calc',
     initialState,
@@ -73,7 +60,7 @@ const calcSlice = createSlice({
             state.isLoading = true
         })
         builder.addCase(calcResult.fulfilled, (state, {payload}) => {
-            state.isLoading = true
+            state.isLoading = false
             state.operation = ''
             state.previousNum = ''
             state.currentNum = String(payload)
@@ -84,6 +71,19 @@ const calcSlice = createSlice({
         })
     }
 })
+
+const calcResult = createAsyncThunk<String, CalcRequest, { rejectValue: ApiError }>(
+    CALCULATION_ACTION,
+    async (request: CalcRequest, thunkApi) => {
+        try {
+            const response = await calculationService.calculation(request)
+            return response.data
+        } catch (error: any) {
+            const err: ApiError = {message: error.response.data}
+            return thunkApi.rejectWithValue(err)
+        }
+    }
+)
 
 export const calcActions = calcSlice.actions
 export const calcReducer = calcSlice.reducer

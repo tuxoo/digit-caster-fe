@@ -2,16 +2,14 @@ import React from "react";
 import {Box, Flex, Grid, GridItem, Img, Text} from "@chakra-ui/react";
 import CalcButton from "./CalcButton";
 import CalcPanel from "./CalcPanel";
-import {useAppSelector} from "../hook/redux";
-import {useActions, useAppDispatch} from "../hook/action";
+import {useAppDispatch, useAppSelector} from "../hook/redux";
 import CalcEraser from "./CalcEraser";
 import Label from "./Label";
-import {calcResult} from "../store/slice/calc.slice";
+import {calcActions, calcResult} from "../store/slice/calc.slice";
 import {CalcRequest} from "../service/calculation.service";
 
 const Calculator = () => {
     const dispatch = useAppDispatch()
-    const {add, type, remove, setOperation, clear} = useActions()
     const {currentNum, previousNum, operation} = useAppSelector(state => state.calc)
 
     const handleResult = async (req: CalcRequest) => {
@@ -58,107 +56,107 @@ const Calculator = () => {
 
                         <GridItem colSpan={3} h='16'>
                             <CalcPanel val={currentNum} handle={event => {
-                                type(event.target.value)
+                                dispatch(calcActions.type(event.target.value))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16' bg='transparent'>
                             <CalcEraser
                                 clickHandle={() => {
-                                    remove()
+                                    dispatch(calcActions.remove())
                                 }}
                                 doubleClickHandle={() => {
-                                    clear()
+                                    dispatch(calcActions.clear())
                                 }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'-'} handle={() => {
-                                setOperation('-')
+                                dispatch(calcActions.setOperation('-'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'+'} handle={() => {
-                                setOperation('+')
+                                dispatch(calcActions.setOperation('+'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'/'} handle={() => {
-                                setOperation('/')
+                                dispatch(calcActions.setOperation('/'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'*'} handle={() => {
-                                setOperation('*')
+                                dispatch(calcActions.setOperation('*'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'7'} handle={() => {
-                                add('7')
+                                dispatch(calcActions.add('7'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'8'} handle={() => {
-                                add('8')
+                                dispatch(calcActions.add('8'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'9'} handle={() => {
-                                add('9')
+                                dispatch(calcActions.add('9'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'^'} handle={() => {
-                                setOperation('^')
+                                dispatch(calcActions.setOperation('^'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'4'} handle={() => {
-                                add('4')
+                                dispatch(calcActions.add('4'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'5'} handle={() => {
-                                add('5')
+                                dispatch(calcActions.add('5'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'6'} handle={() => {
-                                add('6')
+                                dispatch(calcActions.add('6'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'%'} handle={() => {
-                                setOperation('%')
+                                dispatch(calcActions.setOperation('%'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'1'} handle={() => {
-                                add('1')
+                                dispatch(calcActions.add('1'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'2'} handle={() => {
-                                add('2')
+                                dispatch(calcActions.add('2'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'3'} handle={() => {
-                                add('3')
+                                dispatch(calcActions.add('3'))
                             }}/>
                         </GridItem>
 
@@ -172,13 +170,13 @@ const Calculator = () => {
 
                         <GridItem colSpan={2} h='16'>
                             <CalcButton name={'0'} handle={() => {
-                                add('0')
+                                dispatch(calcActions.add('0'))
                             }}/>
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
                             <CalcButton name={'.'} handle={() => {
-                                add('.')
+                                dispatch(calcActions.add('.'))
                             }}/>
                         </GridItem>
 
