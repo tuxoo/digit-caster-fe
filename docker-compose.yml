@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  digit-caster-fe:
+    container_name:   digit-caster-fe
+    build: .
+#    restart: on-failure
+    ports:
+      - 80:80
+    networks:
+      - net
+
+networks:
+  net:
+    name: external_net
