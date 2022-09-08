@@ -3,7 +3,8 @@ import {ApiError} from "../../model/error.model";
 import {CalcRequest, calculationService} from "../../service/calculation.service";
 import {toast} from "react-toastify";
 
-const doubleRegex = /^[0-9,]*[.]{0,1}[0-9,]*$/
+const dotCheckRegex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/
+const zeroCheckRegex = /((\b|\+|-)(0|([1-9][0-9]*))(\.[0-9]+)?)\b/
 
 export interface CalcState {
     previousNum: string
@@ -23,32 +24,56 @@ const initialState: CalcState = {
 
 export const CALCULATION_ACTION = 'calculation/result'
 
+const calcResult = createAsyncThunk<string, CalcRequest, { rejectValue: ApiError }>(
+    CALCULATION_ACTION,
+    async (request: CalcRequest, thunkApi) => {
+        try {
+            const response = await calculationService.calculation(request)
+            return response.data
+        } catch (error: any) {
+            const err: ApiError = {message: error.response.data}
+            return thunkApi.rejectWithValue(err)
+        }
+    }
+)
+
 const calcSlice = createSlice({
     name: 'calc',
     initialState,
     reducers: {
         add(state, action: PayloadAction<string>) {
-            console.log(state.isLoading)
-
-                const isAllow = state.currentNum.concat(action.payload).match(doubleRegex)
-                if (isAllow !== null && state.currentNum.length < 20) {
-                    state.currentNum = state.currentNum.concat(action.payload)
-                }
-
+            const newNum = state.currentNum.concat(action.payload)
+            const isAllow = newNum.match(dotCheckRegex) && newNum.match(zeroCheckRegex)
+            if (isAllow !== null && newNum.length <= 20) {
+                state.currentNum = newNum
+            }
         },
         type(state, action: PayloadAction<string>) {
-            const isAllow = action.payload.match(doubleRegex)
-            if (isAllow !== null && state.currentNum.length < 20) {
-                state.currentNum = action.payload
+            if (action.payload === '') {
+                state.currentNum = ''
+            } else {
+                const isAllow = action.payload.match(dotCheckRegex) && action.payload.match(zeroCheckRegex)
+                if (isAllow !== null && state.currentNum.length < 20) {
+                    state.currentNum = action.payload
+                }
             }
         },
         remove(state) {
-            state.currentNum = state.currentNum.slice(0, -1)
+            const len = state.currentNum.length
+            if (len <= 1) {
+                state.currentNum = ''
+            } else {
+                state.currentNum = `${state.currentNum}`.substring(0, len - 1)
+            }
         },
         setOperation(state, action: PayloadAction<string>) {
-            state.previousNum = state.currentNum
-            state.operation = action.payload
-            state.currentNum = ''
+            if (state.currentNum !== '') {
+                state.previousNum = state.currentNum
+                state.operation = action.payload
+                state.currentNum = ''
+            } else if (state.operation !== '') {
+                state.operation = action.payload
+            }
         },
         clear(state) {
             state.currentNum = ''
@@ -64,7 +89,7 @@ const calcSlice = createSlice({
             state.isLoading = false
             state.operation = ''
             state.previousNum = ''
-            state.currentNum = String(payload)
+            state.currentNum = payload
         })
         builder.addCase(calcResult.rejected, (state, {payload}) => {
             state.isLoading = false;
@@ -73,19 +98,6 @@ const calcSlice = createSlice({
         })
     }
 })
-
-const calcResult = createAsyncThunk<String, CalcRequest, { rejectValue: ApiError }>(
-    CALCULATION_ACTION,
-    async (request: CalcRequest, thunkApi) => {
-        try {
-            const response = await calculationService.calculation(request)
-            return response.data
-        } catch (error: any) {
-            const err: ApiError = {message: error.response.data}
-            return thunkApi.rejectWithValue(err)
-        }
-    }
-)
 
 export const calcActions = calcSlice.actions
 export const calcReducer = calcSlice.reducer

@@ -7,7 +7,6 @@ import CalcEraser from "./CalcEraser";
 import Label from "./Label";
 import {calcActions, calcResult} from "../store/slice/calc.slice";
 import {CalcRequest} from "../service/calculation.service";
-import {toast} from "react-toastify";
 
 const Calculator = () => {
     const dispatch = useAppDispatch()

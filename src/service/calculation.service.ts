@@ -8,8 +8,8 @@ export interface CalcRequest {
 }
 
 class CalculationService {
-    public calculation(calcState: CalcRequest): AxiosPromise<String> {
-        return host.post<String>('/api/v1/calculation', calcState)
+    public calculation(calcState: CalcRequest): AxiosPromise<string> {
+        return host.post<string>('/api/v1/calculation', calcState)
     }
 }
 
