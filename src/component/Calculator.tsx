@@ -5,15 +5,18 @@ import CalcPanel from "./CalcPanel";
 import {useAppDispatch, useAppSelector} from "../hook/redux";
 import CalcEraser from "./CalcEraser";
 import Label from "./Label";
-import {calcActions, calcResult} from "../store/slice/calc.slice";
+import {calcActions} from "../store/slice/calculator";
 import {CalcRequest} from "../service/calculation.service";
+import {getResultAsync} from "../store/slice/calculator/async-thunk";
 
 const Calculator = () => {
     const dispatch = useAppDispatch()
     const {currentNum, previousNum, operation} = useAppSelector(state => state.calc)
 
     const handleResult = async (req: CalcRequest) => {
-        await dispatch(calcResult(req))
+        if (previousNum !== '') {
+            await dispatch(getResultAsync(req))
+        }
     }
 
     return (
@@ -47,7 +50,7 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem colSpan={2} h='16'>
-                            <Flex h='full' width='full' justifyContent='center' alignItems='center'>
+                            <Flex h='full' width='full' justifyContent='end' alignItems='center'>
                                 <Img
                                     src='/static/logo.png'
                                     alt=''/>

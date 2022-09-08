@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {calcReducer} from "./slice/calc.slice";
+import {calcReducer} from "./slice/calculator/slice";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
 export const store = configureStore({

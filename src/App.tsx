@@ -5,7 +5,7 @@ import {injectStyle} from "react-toastify/dist/inject-style";
 
 function App() {
     injectStyle()
-    
+
     return (
         <>
             <ToastContainer

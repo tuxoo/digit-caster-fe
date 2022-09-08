@@ -4,9 +4,18 @@ services:
   digit-caster-fe:
     container_name:   digit-caster-fe
     build: .
-#    restart: on-failure
+    restart: on-failure
     ports:
       - 80:80
+    networks:
+      - net
+
+  digit-caster-be:
+    container_name: digit-caster-be
+    image: digit-caster_app-digit-caster:latest
+    restart: on-failure
+    ports:
+      - 9000:9000
     networks:
       - net
 

@@ -1,7 +1,7 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ApiError} from "../../model/error.model";
-import {CalcRequest, calculationService} from "../../service/calculation.service";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {ApiError} from "../../../model/error.model";
 import {toast} from "react-toastify";
+import {getResultAsync} from "./async-thunk";
 
 const dotCheckRegex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/
 const zeroCheckRegex = /((\b|\+|-)(0|([1-9][0-9]*))(\.[0-9]+)?)\b/
@@ -22,22 +22,7 @@ const initialState: CalcState = {
     error: undefined
 }
 
-export const CALCULATION_ACTION = 'calculation/result'
-
-const calcResult = createAsyncThunk<string, CalcRequest, { rejectValue: ApiError }>(
-    CALCULATION_ACTION,
-    async (request: CalcRequest, thunkApi) => {
-        try {
-            const response = await calculationService.calculation(request)
-            return response.data
-        } catch (error: any) {
-            const err: ApiError = {message: error.response.data}
-            return thunkApi.rejectWithValue(err)
-        }
-    }
-)
-
-const calcSlice = createSlice({
+const slice = createSlice({
     name: 'calc',
     initialState,
     reducers: {
@@ -82,16 +67,16 @@ const calcSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        builder.addCase(calcResult.pending, state => {
+        builder.addCase(getResultAsync.pending, state => {
             state.isLoading = true
         })
-        builder.addCase(calcResult.fulfilled, (state, {payload}) => {
+        builder.addCase(getResultAsync.fulfilled, (state, {payload}) => {
             state.isLoading = false
             state.operation = ''
             state.previousNum = ''
             state.currentNum = payload
         })
-        builder.addCase(calcResult.rejected, (state, {payload}) => {
+        builder.addCase(getResultAsync.rejected, (state, {payload}) => {
             state.isLoading = false;
             state.error = payload
             toast.error("Something went wrong")
@@ -99,6 +84,5 @@ const calcSlice = createSlice({
     }
 })
 
-export const calcActions = calcSlice.actions
-export const calcReducer = calcSlice.reducer
-export {calcResult}
+export const calcActions = slice.actions
+export const calcReducer = slice.reducer
