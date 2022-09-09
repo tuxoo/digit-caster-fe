@@ -15,9 +15,9 @@ FROM nginx:alpine
 
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY /etc/ssl/digit-caster.crt /etc/nginx/ssl/digit-caster.crt
-COPY /etc/ssl/digit-caster.key /etc/nginx/ssl/digit-caster.key
 
-EXPOSE 80
+VOLUME /etc/nginx/ssl
+
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -6,8 +6,10 @@ services:
     image: digit-caster-fe:1.0
     build: ./
     restart: on-failure
+    volumes:
+      - /etc/ssl:/etc/nginx/ssl
     ports:
-      - 80:80
+      - 443:443
     networks:
       - net
 
