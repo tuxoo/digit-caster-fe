@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 const theme = extendTheme({
     fonts: {
         body: `'Raleway', sans-serif,`
-    },
+    }
 })
 
 root.render(

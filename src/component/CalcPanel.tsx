@@ -8,7 +8,13 @@ interface CalcPanelProps {
 
 const CalcPanel = ({val, handle}: CalcPanelProps) => {
     return (
-        <Flex h='full' width='full' justifyContent='center' alignItems='center'>
+        <Flex
+            h='full'
+            width='full'
+            justifyContent='center'
+            alignItems='center'
+            userSelect='none'
+        >
             <Input
                 onChange={handle}
                 placeholder='0'

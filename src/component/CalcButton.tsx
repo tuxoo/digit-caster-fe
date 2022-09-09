@@ -18,6 +18,7 @@ const CalcButton = ({name, handle}: CalcButtonProps) => {
             boxShadow='xl'
             justifyContent='center'
             rounded='10'
+            userSelect='none'
             _hover={{
                 bg: `#B794F4`
             }}

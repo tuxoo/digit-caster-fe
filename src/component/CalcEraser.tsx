@@ -8,7 +8,13 @@ interface CalcEraserProps {
 
 const CalcEraser = ({clickHandle, doubleClickHandle}: CalcEraserProps) => {
     return (
-        <Flex h='full' width='full' justifyContent='center' alignItems='center'>
+        <Flex
+            h='full'
+            width='full'
+            justifyContent='center'
+            alignItems='center'
+            userSelect='none'
+        >
             <Box
                 as='button'
                 onClick={clickHandle}

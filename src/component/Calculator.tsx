@@ -4,10 +4,11 @@ import CalcButton from "./CalcButton";
 import CalcPanel from "./CalcPanel";
 import {useAppDispatch, useAppSelector} from "../hook/redux";
 import CalcEraser from "./CalcEraser";
-import Label from "./Label";
 import {calcActions} from "../store/slice/calculator";
 import {CalcRequest} from "../service/calculation.service";
 import {getResultAsync} from "../store/slice/calculator/async-thunk";
+import CopyMark from "./CopyMark";
+import Label from "./Label";
 
 const Calculator = () => {
     const dispatch = useAppDispatch()
@@ -50,11 +51,7 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem colSpan={2} h='16'>
-                            <Flex h='full' width='full' justifyContent='end' alignItems='center'>
-                                <Img
-                                    src='/static/logo.png'
-                                    alt=''/>
-                            </Flex>
+                            <Label path={'/static/logo.png'}/>
                         </GridItem>
 
                         <GridItem colSpan={3} h='16'>
@@ -184,7 +181,7 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem colSpan={4} h='10'>
-                            <Label
+                            <CopyMark
                                 text={'© 2022 DigitCaster.com'}
                             />
                         </GridItem>

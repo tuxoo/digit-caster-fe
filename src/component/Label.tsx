@@ -1,14 +1,22 @@
 import React from "react";
-import {Flex, Text} from "@chakra-ui/react";
+import {Flex, Img, Text} from "@chakra-ui/react";
 
 interface LabelProps {
-    text: string
+    path: string
 }
 
-const Label = ({text}: LabelProps) => {
+const Label = ({path}: LabelProps) => {
     return (
-        <Flex h='full' width='full' justifyContent='start' alignItems='center'>
-            <Text>{text}</Text>
+        <Flex
+            h='full'
+            width='full'
+            justifyContent='end'
+            alignItems='center'
+            userSelect='none'
+        >
+            <Img
+                src={path}
+                alt=''/>
         </Flex>
     )
 }
