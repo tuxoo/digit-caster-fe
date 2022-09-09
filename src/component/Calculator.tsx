@@ -1,11 +1,10 @@
 import React from "react";
-import {Box, Flex, Grid, GridItem, Img, Text} from "@chakra-ui/react";
+import {Box, Flex, Grid, GridItem, Text} from "@chakra-ui/react";
 import CalcButton from "./CalcButton";
 import CalcPanel from "./CalcPanel";
 import {useAppDispatch, useAppSelector} from "../hook/redux";
 import CalcEraser from "./CalcEraser";
 import {calcActions} from "../store/slice/calculator";
-import {CalcRequest} from "../service/calculation.service";
 import {getResultAsync} from "../store/slice/calculator/async-thunk";
 import CopyMark from "./CopyMark";
 import Label from "./Label";
@@ -14,9 +13,13 @@ const Calculator = () => {
     const dispatch = useAppDispatch()
     const {currentNum, previousNum, operation} = useAppSelector(state => state.calc)
 
-    const handleResult = async (req: CalcRequest) => {
-        if (previousNum !== '') {
-            await dispatch(getResultAsync(req))
+    const handleResult = async () => {
+        if (currentNum !== '' && previousNum !== '') {
+            await dispatch(getResultAsync({
+                previousNum: Number(previousNum),
+                currentNum: Number(currentNum),
+                operation: operation
+            }))
         }
     }
 
@@ -44,7 +47,7 @@ const Calculator = () => {
                                 </Flex>
                                 <Flex h='full' width='full' justifyContent='start' alignItems='start'>
                                     <Text fontSize='sm'>
-                                        {operation}
+                                        {operation === '=' ? '' : operation}
                                     </Text>
                                 </Flex>
                             </Flex>
@@ -137,7 +140,7 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem colSpan={1} h='16'>
-                            <CalcButton name={'%'} handle={() => {
+                            <CalcButton name={'√'} handle={() => {
                                 dispatch(calcActions.setOperation('%'))
                             }}/>
                         </GridItem>
@@ -161,11 +164,7 @@ const Calculator = () => {
                         </GridItem>
 
                         <GridItem rowSpan={2} colSpan={1}>
-                            <CalcButton name={'='} handle={() => handleResult({
-                                previousNum: Number(previousNum),
-                                currentNum: Number(currentNum),
-                                operation: operation
-                            })}/>
+                            <CalcButton name={'='} handle={() => handleResult()}/>
                         </GridItem>
 
                         <GridItem colSpan={2} h='16'>

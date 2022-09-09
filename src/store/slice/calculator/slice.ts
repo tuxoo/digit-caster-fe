@@ -27,8 +27,12 @@ const slice = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<string>) {
-            const newNum = state.currentNum.concat(action.payload)
+            const newNum = state.operation === '=' ? action.payload : state.currentNum + action.payload
+
+            state.operation = state.operation === '=' ? '' : state.operation
+
             const isAllow = newNum.match(dotCheckRegex) && newNum.match(zeroCheckRegex)
+
             if (isAllow !== null && newNum.length <= 20) {
                 state.currentNum = newNum
             }
@@ -52,13 +56,15 @@ const slice = createSlice({
             }
         },
         setOperation(state, action: PayloadAction<string>) {
-            if (state.currentNum !== '') {
+            if (state.currentNum !== '' && (state.operation === '' || state.operation === '=')) {
                 state.previousNum = state.currentNum
                 state.operation = action.payload
                 state.currentNum = ''
-            } else if (state.operation !== '') {
-                state.operation = action.payload
             }
+            // else if (state.currentNum === '') {
+            //     state.operation = action.payload
+            // }
+            state.operation = action.payload
         },
         clear(state) {
             state.currentNum = ''
@@ -72,7 +78,7 @@ const slice = createSlice({
         })
         builder.addCase(getResultAsync.fulfilled, (state, {payload}) => {
             state.isLoading = false
-            state.operation = ''
+            state.operation = '='
             state.previousNum = ''
             state.currentNum = payload
         })
