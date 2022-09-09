@@ -24,11 +24,7 @@ const Calculator = () => {
     }
 
     return (
-        <Box bgGradient={[
-            'linear(to-tr, teal.300, yellow.400)',
-            'linear(to-t, blue.200, teal.500)',
-            'linear(to-b, orange.100, purple.300)',
-        ]}>
+        <Box bgGradient={'linear(to-b, orange.100, purple.300)'}>
             <Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
                 <Flex direction='column' bgColor='white' boxShadow='xl' p={4} rounded={10}>
                     <Grid
